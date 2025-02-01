@@ -9,6 +9,7 @@ interface CustomFormGroupProps {
   register: UseFormRegisterReturn;
   error?: FieldError;
   className?: string;
+  type?: string;
 }
 
 const CustomFormGroup: React.FC<CustomFormGroupProps> = ({
@@ -18,11 +19,13 @@ const CustomFormGroup: React.FC<CustomFormGroupProps> = ({
   register,
   error,
   className,
+  type,
 }) => {
   return (
     <Form.Group className={className} controlId={controlId}>
       <Form.Label>{label}</Form.Label>
       <Form.Control
+        type={type}
         placeholder={placeholder}
         {...register}
         isInvalid={!!error}

@@ -1,18 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { LoginRequest } from "../../../models/auth/LoginRequest";
-
-// Zod schema for validation
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
-// TypeScript type for form data
-type LoginFormInputs = z.infer<typeof loginSchema>;
+import CustomFormGroup from "../../../core/components/CustomFormGroup";
+import CustomButton from "../../../core/components/CustomButton";
+import { LoginFormInputs, loginSchema } from "../schema/LoginSchema";
 
 type LoginComponentProps = {
   onSubmitClick: (data: LoginRequest) => void;
@@ -36,38 +29,31 @@ const LoginComponent = ({ onSubmitClick }: LoginComponentProps) => {
 
   return (
     <div className="form_wrapper">
-      {/* Form */}
       <Form className="form_container" onSubmit={handleSubmit(onSubmit)}>
-        <div className="h4 mb-2 text-center">Login</div>
+        <div className="title">Login</div>
 
-        <Form.Group className="form_group" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Email"
-            {...register("email")}
-            isInvalid={!!errors.email}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.email?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="form_group" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            {...register("password")}
-            isInvalid={!!errors.password}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.password?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
+        <CustomFormGroup
+          controlId="email"
+          className="form_group"
+          label="Email"
+          placeholder="Email"
+          register={register("email")}
+          error={errors.email}
+        />
+
+        <CustomFormGroup
+          controlId="password"
+          className="form_group"
+          label="Password"
+          type="password"
+          placeholder="Password"
+          register={register("password")}
+          error={errors.password}
+        />
+
         <div className="mb-4" />
-        <Button className="w-100" variant="primary" type="submit">
-          LOGIN
-        </Button>
+
+        <CustomButton>{"LOGIN"}</CustomButton>
       </Form>
     </div>
   );

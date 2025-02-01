@@ -11,9 +11,12 @@ import AddUpdateTodoPage from "../pages/todo/AddUpdateTodoPage";
 import Rootlayout from "../core/components/RootLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import TodoRootLayout from "../core/components/TodoRootLayout";
-import TokenManager from "../services/local/TokenManagers";
+import { getAuthState } from "../store/slice/AuthSlice";
+import { useSelector } from "react-redux";
 
 const AppRouter: React.FC = () => {
+  const { isLoggedIn } = useSelector(getAuthState);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -21,7 +24,7 @@ const AppRouter: React.FC = () => {
       children: [
         {
           path: "",
-          element: TokenManager.hasToken() ? (
+          element: isLoggedIn ? (
             <Navigate to="todo" replace />
           ) : (
             <Navigate to="login" replace />
