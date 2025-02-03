@@ -13,6 +13,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import TodoRootLayout from "../core/components/TodoRootLayout";
 import { getAuthState } from "../store/slice/AuthSlice";
 import { useSelector } from "react-redux";
+import Profilepage from "../pages/profile/ProfilePage";
 
 const AppRouter: React.FC = () => {
   const { isLoggedIn } = useSelector(getAuthState);
@@ -43,6 +44,14 @@ const AppRouter: React.FC = () => {
           element: (
             <ProtectedRoute>
               <RegisterPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <ProtectedRoute protect={true}>
+              <Profilepage />
             </ProtectedRoute>
           ),
         },

@@ -1,15 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../AppStore";
-import TokenManager from "../../services/local/TokenManagers";
+import { User } from "../../models/auth/UserModel";
 
 export const getAuthState = (state: RootState) => state.auth;
 
 interface AuthState {
   isLoggedIn: boolean;
+  userdata: User | null;
+  isUserDetailsLoading: boolean;
 }
 
 const initialState: AuthState = {
   isLoggedIn: false,
+  userdata: null,
+  isUserDetailsLoading: false,
 };
 
 export const AuthSlice = createSlice({
@@ -19,15 +23,10 @@ export const AuthSlice = createSlice({
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
-    initializeAuth: (state) => {
-      console.log("initializeAuth");
-
-      const token = TokenManager.getToken();
-      if (token) {
-        state.isLoggedIn = true;
-      }
+    setUserDetails: (state, action: PayloadAction<User | null>) => {
+      state.userdata = action.payload;
     },
   },
 });
 
-export const { setIsLoggedIn, initializeAuth } = AuthSlice.actions;
+export const { setIsLoggedIn, setUserDetails } = AuthSlice.actions;

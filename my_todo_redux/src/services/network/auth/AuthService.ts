@@ -11,8 +11,12 @@ const loginUser = async (loginRequest: LoginRequest) => {
   return response.data;
 };
 
+const userDetails = async () => {
+  const response = await AxiosClient.get(Endpoints.userDetails);
+  return response.data;
+};
+
 const refreshToken = async () => {
-  //const response = await AxiosClient.get(Endpoints.refreshToken);
   const response = await axios
     .create({
       baseURL: "https://api-samples-ts.onrender.com/",
@@ -25,4 +29,5 @@ const refreshToken = async () => {
 export const AuthService = {
   loginUser: loginUser,
   refreshToken: refreshToken,
+  userDetails: userDetails,
 };

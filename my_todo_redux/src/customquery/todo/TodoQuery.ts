@@ -24,16 +24,6 @@ const useTodoListQuery = () => {
 };
 
 const useTodoDetailsQuery = () => {
-  // const todoDetailsMutation = useMutation<TodoDetailsResponse, Error, string>({
-  //   mutationFn: (id) => TodoService.todoDetails(id),
-  // });
-  // return {
-  //   callTodoDetails: todoDetailsMutation.mutate,
-  //   isTodoDetailsLoading: todoDetailsMutation.isPending,
-  //   todoDetailsData: todoDetailsMutation.data,
-  //   todoDetailsError: todoDetailsMutation.error,
-  // };
-
   const [todoId, setTodoId] = useState<string>("");
   const { isLoading, data, error } = useQuery<TodoDetailsResponse, Error>({
     queryKey: ["todoDetails", todoId],

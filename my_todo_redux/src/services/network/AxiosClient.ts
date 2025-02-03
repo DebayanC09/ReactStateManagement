@@ -5,7 +5,7 @@ import { RefreshTokenResponse } from "../../models/auth/RefreshTokenResponse";
 
 const instance: AxiosInstance = axios.create({
   baseURL: "https://api-samples-ts.onrender.com/",
-  timeout: 10000,
+  //timeout: 10000,
 });
 
 instance.interceptors.request.use(async (config) => {
