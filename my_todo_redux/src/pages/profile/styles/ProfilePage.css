@@ -1,0 +1,30 @@
+.profile_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile_container {
+    width: 24rem;
+    max-width: 90%;
+    z-index: 1;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.375rem;
+  }
+
+  .profile_group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile_label {
+    width: 100px; /* Adjust width as needed */
+    font-weight: bold;
+  }
+  
+  .profile_text {
+    flex: 1;
+  }

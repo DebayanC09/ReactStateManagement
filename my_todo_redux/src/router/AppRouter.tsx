@@ -49,11 +49,18 @@ const AppRouter: React.FC = () => {
         },
         {
           path: "profile",
-          element: (
-            <ProtectedRoute protect={true}>
-              <Profilepage />
-            </ProtectedRoute>
-          ),
+          element: <TodoRootLayout />,
+          children: [
+            {
+              index: true,
+              path: "",
+              element: (
+                <ProtectedRoute protect={true}>
+                  <Profilepage />
+                </ProtectedRoute>
+              ),
+            },
+          ],
         },
         {
           path: "todo",
