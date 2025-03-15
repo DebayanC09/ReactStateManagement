@@ -1,17 +1,28 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import TokenManager from "../local/TokenManagers";
 import { AuthService } from "./auth/AuthService";
 import { RefreshTokenResponse } from "../../models/auth/RefreshTokenResponse";
+import { EnvironmentConfig } from "../../utils/EnvironmentConfig";
+
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  withAuth?: boolean;
+}
 
 const instance: AxiosInstance = axios.create({
-  baseURL: "https://api-samples-ts.onrender.com/",
+  baseURL: EnvironmentConfig.API_BASE_URL,
   //timeout: 10000,
 });
 
 instance.interceptors.request.use(async (config) => {
-  const token = TokenManager.getToken();
-  if (token) {
-    config.headers.Authorization = `${token}`;
+  const customConfig = config as CustomAxiosRequestConfig;
+
+  // Check if the request should use authentication
+  const shouldUseAuth = customConfig.withAuth ?? true;
+  if (shouldUseAuth) {
+    const token = TokenManager.getToken();
+    if (token) {
+      config.headers.Authorization = `${token}`;
+    }
   }
   return config;
 });
@@ -36,4 +47,15 @@ instance.interceptors.response.use(
   }
 );
 
-export const AxiosClient: AxiosInstance = instance;
+export const AxiosClient = {
+  ...instance,
+  get: async (url: string, config?: CustomAxiosRequestConfig) => {
+    return instance.get(url, config);
+  },
+  post: async (url: string, data?: any, config?: CustomAxiosRequestConfig) => {
+    return instance.post(url, data, config);
+  },
+  put: async (url: string, data?: any, config?: CustomAxiosRequestConfig) => {
+    return instance.put(url, data, config);
+  },
+};
