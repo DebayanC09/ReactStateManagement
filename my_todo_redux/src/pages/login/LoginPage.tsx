@@ -3,9 +3,10 @@ import LoginComponent from "./components/LoginComponent";
 import { LoginRequest } from "../../models/auth/LoginRequest";
 import { showToast } from "../../utils/CustomToast";
 import { useLoginHelper } from "./helpers/LoginHelper";
+import Loader from "../../core/components/Loader";
 
 const LoginPage: React.FC = () => {
-  const { navigate, callLoginApi } = useLoginHelper();
+  const { navigate, callLoginApi,isLoginLoading } = useLoginHelper();
 
   const handleSubmitCLick = React.useCallback(
     (requset: LoginRequest) => {
@@ -22,7 +23,12 @@ const LoginPage: React.FC = () => {
     [callLoginApi, navigate]
   );
 
-  return <LoginComponent onSubmitClick={handleSubmitCLick} />;
+  return (
+    <>
+      <LoginComponent onSubmitClick={handleSubmitCLick} />
+      {isLoginLoading ? <Loader/> : null}
+    </>
+  );
 };
 
 export default LoginPage;

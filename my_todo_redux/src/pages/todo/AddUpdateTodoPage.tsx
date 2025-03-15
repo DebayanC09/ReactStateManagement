@@ -5,6 +5,7 @@ import { TodoModel } from "../../models/todo/TodoModel";
 import { showToast } from "../../utils/CustomToast";
 import { TodoType } from "../../utils/Constants";
 import Loader from "../../core/components/Loader";
+import EmptyPlaceHolder from "../../core/components/EmptyPlaceHolder";
 
 const AddUpdateTodoPage: React.FC = () => {
   const {
@@ -47,16 +48,21 @@ const AddUpdateTodoPage: React.FC = () => {
   );
 
   return (
-    <>
-      <AddUpdateTodoComponent
-        type={type}
-        title={title}
-        buttonText={buttonText}
-        todoDetails={todoDetails}
-        onSubmitClick={handleSubmitCLick}
-      />
+    <div className="page-container">
+      {type === TodoType.ADD || (type === TodoType.UPDATE && todoDetails) ? (
+        <AddUpdateTodoComponent
+          type={type}
+          title={title}
+          buttonText={buttonText}
+          todoDetails={todoDetails}
+          onSubmitClick={handleSubmitCLick}
+        />
+      ) : null}
+      {type === TodoType.UPDATE && !todoDetails && !isLoading ? (
+        <EmptyPlaceHolder />
+      ) : null}
       {isLoading ? <Loader /> : null}
-    </>
+    </div>
   );
 };
 

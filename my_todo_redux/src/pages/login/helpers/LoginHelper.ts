@@ -6,7 +6,7 @@ import { LoginResponse } from "../../../models/auth/LoginResponse";
 import TokenManager from "../../../services/local/TokenManagers";
 
 export const useLoginHelper = () => {
-  const { callLogin } = AuthQuery.useLoginQuery();
+  const { callLogin,isLoginLoading } = AuthQuery.useLoginQuery();
   const navigate = useNavigate();
 
   const callLoginApi = React.useCallback(
@@ -37,5 +37,6 @@ export const useLoginHelper = () => {
   return {
     navigate,
     callLoginApi,
+    isLoginLoading
   };
 };

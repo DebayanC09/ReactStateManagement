@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .form_container {
@@ -32,10 +33,25 @@
 
 .todo-content {
   padding-top: 80px;
+  width: 100%;
+  display: flex;
 }
 
 .title {
   margin-bottom: 0.5rem;
   text-align: center;
   font-size: 1.5rem;
+}
+
+.empty-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.page-container {
+  width: 100%;
+  display: flex;
 }
