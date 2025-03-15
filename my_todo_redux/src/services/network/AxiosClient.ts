@@ -6,6 +6,7 @@ import { EnvironmentConfig } from "../../utils/EnvironmentConfig";
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   withAuth?: boolean;
+  useResponseInterceptor?: boolean;
 }
 
 const instance: AxiosInstance = axios.create({
@@ -30,17 +31,22 @@ instance.interceptors.request.use(async (config) => {
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const status = error.response ? error.response.status : null;
-    if (status === 401) {
-      try {
-        const result: RefreshTokenResponse = await AuthService.refreshToken();
-        TokenManager.setToken(result.token);
-        error.config.headers.Authorization = result.token;
-        return instance.request(error.config);
-      } catch (refreshError) {
-        TokenManager.deleteToken();
-        window.location.href = "/login";
-        return Promise.reject(new Error(error));
+    const shouldUseResponseInterceptor =
+      (error.config as CustomAxiosRequestConfig).useResponseInterceptor ?? true;
+
+    if (shouldUseResponseInterceptor) {
+      const status = error.response ? error.response.status : null;
+      if (status === 401) {
+        try {
+          const result: RefreshTokenResponse = await AuthService.refreshToken();
+          TokenManager.setToken(result.token);
+          error.config.headers.Authorization = result.token;
+          return instance.request(error.config);
+        } catch (refreshError) {
+          TokenManager.deleteToken();
+          window.location.href = "/login";
+          return Promise.reject(new Error(error));
+        }
       }
     }
     return Promise.reject(new Error(error));

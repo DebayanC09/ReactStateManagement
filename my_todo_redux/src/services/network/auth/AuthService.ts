@@ -1,8 +1,6 @@
-import axios from "axios";
 import { LoginRequest } from "../../../models/auth/LoginRequest";
 import { Endpoints } from "../../../utils/EndPoints";
 import { AxiosClient } from "../AxiosClient";
-import { EnvironmentConfig } from "../../../utils/EnvironmentConfig";
 
 const loginUser = async (loginRequest: LoginRequest) => {
   const response = await AxiosClient.post(
@@ -26,12 +24,10 @@ const userDetails = async () => {
 };
 
 const refreshToken = async () => {
-  const response = await axios
-    .create({
-      baseURL: EnvironmentConfig.API_BASE_URL,
-      timeout: 10000,
-    })
-    .get(Endpoints.refreshToken);
+  const response = await AxiosClient.get(Endpoints.refreshToken, {
+    withAuth: true,
+    useResponseInterceptor: false,
+  });
   return response.data;
 };
 
