@@ -6,6 +6,7 @@ import { TodoFormInputs } from "../schema/TodoSchema";
 import { useAddUpdateTodoComponentHelper } from "../helpers/AddUpdateTodoComponentHelper";
 import CustomFormGroup from "../../../core/components/CustomFormGroup";
 import CustomButton from "../../../core/components/CustomButton";
+import "../../../core/styles/CustomButton.css";
 
 type AddUpdateTodoComponentProps = {
   type: TodoType;
@@ -94,7 +95,13 @@ const AddUpdateTodoComponent = ({
 
         <div className="mb-4" />
 
-        <CustomButton>{buttonText}</CustomButton>
+        <CustomButton
+          className={
+            type === TodoType.UPDATE ? "custom_button_update" : "custom_button"
+          }
+        >
+          {buttonText}
+        </CustomButton>
       </Form>
     </div>
   );

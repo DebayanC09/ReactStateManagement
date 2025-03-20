@@ -1,3 +1,12 @@
 .custom_button {
-    width: 100%;
+  width: 100%;
+}
+
+.custom_button_update {
+  width: 100%;
+  background-color: #dc3545 !important; /* Force Bootstrap override */
+  color: white !important; /* Ensure text is visible */
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
 }

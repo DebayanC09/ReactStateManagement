@@ -25,7 +25,7 @@ const AddUpdateTodoPage: React.FC = () => {
         callAddTodoApi(request, {
           onSuccess: (response) => {
             showToast(response.message);
-            navigate(-1);
+            navigate(`/todo`);
           },
           onError: (error) => {
             showToast(error.message);
@@ -36,7 +36,7 @@ const AddUpdateTodoPage: React.FC = () => {
         callUpdateTodoApi(request, {
           onSuccess: (response) => {
             showToast(response.message);
-            navigate(-1);
+            navigate(`/todo`);
           },
           onError: (error) => {
             showToast(error.message);
